@@ -1,4 +1,4 @@
-class subString{
+public class subString{
 
         public static void findSubSet(String str, String ans, int i){
             // base case
