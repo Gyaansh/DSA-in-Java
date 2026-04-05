@@ -45,7 +45,7 @@ public static void printBoard(char[][] board){
 }
 
     public static void main(String[] args) {
-        int n = 4;
+        int n = 6;
         char[][] board = new char[n][n];
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board.length; j++) {
