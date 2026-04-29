@@ -1,3 +1,4 @@
+
 class BasicOperations {
 
     public static class Node {
@@ -34,10 +35,11 @@ class BasicOperations {
     public static void printLinkedList() {
         Node temp = head;
         while (temp != null) {
-            System.out.print(temp.data + " ");
+            System.out.print(temp.data + "->");
             temp = temp.next;
         }
-        System.out.println();
+        System.out.print("null");
+        System.err.println();
     }
 
     public static void insertAtMiddle(int idx, int data) {
@@ -85,7 +87,7 @@ class BasicOperations {
         int val = tail.data;
         Node prev = head;
         int i = 0;
-        while(prev != null && i < size - 1){
+        while (prev != null && i < size - 1) {
             prev = prev.next;
             i++;
         }
@@ -95,33 +97,101 @@ class BasicOperations {
         return val;
 
     }
-    static int linearSearch(int key){
+
+    static int linearSearch(int key) {
         Node temp = head;
-        int idx=0;
-        while(temp != null){
-            if(temp.data == key)
+        int idx = 0;
+        while (temp != null) {
+            if (temp.data == key)
                 return idx;
             temp = temp.next;
             idx++;
         }
         return -1;
     }
+
+    static void reverseList() {
+        Node prev = null;
+        Node curr = tail = head;
+        Node next;
+        while (curr != null) {
+            next = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = next;
+        }
+        head = prev;
+    }
+
+    static void deleteNFromLast(int n) {
+
+        int idx = size - n + 1, i = 1;
+        Node temp = head;
+        while (temp != null && i < idx) {
+            temp = temp.next;
+            i++;
+        }
+        temp.next = temp.next.next;
+    }
+
+    static Node findMid() {
+        Node fast;
+        Node slow = fast = head;
+        while (fast.next != null && fast.next.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        return slow;
+    }
+
+    static boolean checkPalindrome() { // Recursive method
+        if (head == null || head.next == null) {
+            return true;
+        }
+
+        Node mid = findMid();
+
+        Node prev = null;
+        Node curr = mid;
+        Node next;
+
+        while (curr != null) {
+            next = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = next;
+        }
+
+        Node left = head;
+        Node right = prev;
+
+        while (right.next != null) {
+            if(left.data != right.data){
+                return false;
+            }
+            left = left.next;
+            right = right.next;
+        }
+        return true;
+    }
+
     public static Node tail;
     public static Node head;
     public static int size;
-    
+
     public static void main(String[] args) {
         Node ll = new Node(1);
         head = tail = ll;
-        insertAtEnd(3);
-        insertAtEnd(4);
+        insertAtEnd(2);
+        insertAtEnd(2);
+        insertAtEnd(1);
+        // insertAtMiddle(1, 2);
+        // printLinkedList();
+        // reverseList();
+        // deleteNFromLast(1);
         printLinkedList();
-        insertAtMiddle(1, 2);
-        printLinkedList();
-        // removeFirst();
-        removeLast();
-        printLinkedList();
-        System.out.println(linearSearch(7));
-
+        System.out.println(checkPalindrome());
+        
+        
     }
 }
