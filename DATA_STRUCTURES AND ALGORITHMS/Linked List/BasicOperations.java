@@ -8,6 +8,10 @@ class BasicOperations {
         Node(int data) {
             this.data = data;
         }
+        Node(int data, Node next){
+            this.data = data;
+            this.next = next;
+        }
     }
 
     public static void insertAtBeginning(int data) {
@@ -144,7 +148,7 @@ class BasicOperations {
         return slow;
     }
 
-    static boolean checkPalindrome() { // Recursive method
+    static boolean checkPalindrome() { 
         if (head == null || head.next == null) {
             return true;
         }
@@ -175,6 +179,42 @@ class BasicOperations {
         return true;
     }
 
+    static boolean isCycle(){ //Floyd's Cycle Finding Algorithm
+        Node fast,slow;
+        slow = fast = head;
+        while(fast != null && fast.next != null){
+            slow = slow.next;
+            fast = fast.next.next;
+            if(fast == slow){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    static void removeCycle(){
+        Node fast,slow;
+        slow = fast = head;
+        boolean cycle = false;
+        while(fast != null && fast.next != null){
+            slow = slow.next;
+            fast = fast.next.next;
+            if(fast == slow){
+                cycle = true;
+                break;
+            }
+        }
+        if(cycle == false) return;
+        slow = head;
+        Node prev = null;
+        while(slow!=fast){
+            slow = slow.next;
+            prev = fast;
+            fast = fast.next;
+        }
+        prev.next = null;
+    }
+
     public static Node tail;
     public static Node head;
     public static int size;
@@ -182,16 +222,19 @@ class BasicOperations {
     public static void main(String[] args) {
         Node ll = new Node(1);
         head = tail = ll;
-        insertAtEnd(2);
-        insertAtEnd(2);
-        insertAtEnd(1);
-        // insertAtMiddle(1, 2);
-        // printLinkedList();
-        // reverseList();
-        // deleteNFromLast(1);
-        printLinkedList();
-        System.out.println(checkPalindrome());
+        // insertAtEnd(2);
+        // insertAtEnd(3);
+        // insertAtEnd(4);
+        // insertAtEnd(5);
+        head.next = new Node(2);
+        head.next.next = new Node(3);
+        head.next.next.next = new Node(4);
+        head.next.next.next.next = new Node(5,head.next);
         
+        System.out.println(isCycle());
+        removeCycle();
+        System.out.println(isCycle());
+        printLinkedList();
         
     }
 }
