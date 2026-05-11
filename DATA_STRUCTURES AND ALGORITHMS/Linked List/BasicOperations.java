@@ -159,7 +159,7 @@ class BasicOperations {
         Node curr = mid;
         Node next;
 
-        while (curr != null) {
+        while (curr != null) { //Reversing the list
             next = curr.next;
             curr.next = prev;
             prev = curr;
